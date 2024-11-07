@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Skin Disease Detection</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #007bff, #4caf50);
+            color: #333;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .container {
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #007bff;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .file-upload {
+            margin: 20px 0;
+        }
+
+        .btn-upload {
+            background-color: #007bff;
+            color: white;
+            width: 100%;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn-upload:hover {
+            background-color: #0056b3;
+        }
+
+        .prediction {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .prediction span {
+            color: #28a745;
+            font-weight: 700;
+            font-size: 22px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 14px;
+            color: #f1f1f1;
+            width: 100%;
+            padding: 15px 0;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.6);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .footer p {
+            margin: 0;
+            font-weight: 700;
+            font-size: 16px;
+            color: #f1f1f1;
+        }
+
+        .footer span {
+            display: block;
+            font-size: 13px;
+            margin-top: 2px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Skin Disease Detection</h1>
+        <form method="post" enctype="multipart/form-data">
+            <div class="file-upload custom-file">
+                <input type="file" class="custom-file-input" name="image" required>
+                <label class="custom-file-label">Choose an image file</label>
+            </div>
+            <button type="submit" class="btn btn-upload mt-3">Predict</button>
+        </form>
+
+        <!-- Conditional display of prediction result -->
+        {% if prediction %}
+        <div class="prediction">
+            Prediction: <span>{{ prediction }}</span>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="footer">
+        <p>Created by</p>
+        <span>Atharva Balajiwale, Paras Jain, Omkar Boralkar, Shubh Radia</span>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Update file input label with selected file name
+        $('.custom-file-input').on('change', function (event) {
+            var inputFile = event.currentTarget;
+            $(inputFile).parent().find('.custom-file-label').html(inputFile.files[0].name);
+        });
+    </script>
+</body>
+
+</html>
