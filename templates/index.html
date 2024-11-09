@@ -1,124 +1,244 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Skin Disease Detection</title>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
+            font-family: 'Poppins', sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            margin: 0;
-            background: linear-gradient(135deg, #007bff, #4caf50);
+            background: linear-gradient(135deg, #ff3e3e, #ff7676);
             color: #333;
-            font-family: 'Roboto', sans-serif;
+            padding: 20px;
         }
 
         .container {
-            max-width: 500px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.02);
         }
 
         h1 {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
-            color: #007bff;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
+            color: #ff3e3e;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            color: #ff3e3e;
+            margin-bottom: 20px;
         }
 
         .file-upload {
-            margin: 20px 0;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .file-upload input[type="file"] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            cursor: inherit;
+            display: block;
         }
 
         .btn-upload {
-            background-color: #007bff;
+            background-color: #ff3e3e;
             color: white;
             width: 100%;
             font-weight: 500;
             letter-spacing: 0.5px;
             border: none;
-            transition: background-color 0.3s;
+            padding: 12px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .btn-upload:hover {
-            background-color: #0056b3;
+            background-color: #ff1a1a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 62, 62, 0.4);
+        }
+
+        .btn-upload:active {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(255, 62, 62, 0.4);
+        }
+
+        .file-name {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        #image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 62, 62, 0.1);
+            border-left-color: #ff3e3e;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .prediction {
-            margin-top: 20px;
-            font-size: 20px;
+            margin-top: 30px;
+            font-size: 24px;
             font-weight: bold;
             color: #333;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .prediction.show {
+            opacity: 1;
         }
 
         .prediction span {
-            color: #28a745;
+            color: #ff3e3e;
             font-weight: 700;
-            font-size: 22px;
+            font-size: 28px;
         }
 
         .footer {
             text-align: center;
             font-size: 14px;
-            color: #f1f1f1;
+            color: #ffffff;
             width: 100%;
-            padding: 15px 0;
+            padding: 20px 0;
             position: fixed;
             bottom: 0;
             left: 0;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(255, 62, 62, 0.8);
             font-weight: 500;
-            letter-spacing: 0.5px;
         }
 
         .footer p {
             margin: 0;
             font-weight: 700;
-            font-size: 16px;
-            color: #f1f1f1;
+            font-size: 18px;
         }
 
         .footer span {
             display: block;
-            font-size: 13px;
-            margin-top: 2px;
+            font-size: 14px;
+            margin-top: 5px;
             font-weight: 500;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .btn-upload {
+                font-size: 14px;
+                padding: 10px;
+            }
+            .upload-icon {
+                font-size: 36px;
+            }
+            h1 {
+                font-size: 28px;
+            }
+            .container {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .btn-upload {
+                font-size: 12px;
+                padding: 8px;
+            }
+            .upload-icon {
+                font-size: 30px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .container {
+                padding: 20px;
+            }
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h1>Skin Disease Detection</h1>
-        <form method="post" enctype="multipart/form-data">
-            <div class="file-upload custom-file">
-                <input type="file" class="custom-file-input" name="image" required>
-                <label class="custom-file-label">Choose an image file</label>
+        <div class="upload-icon">📁</div>
+        <form id="upload-form">
+            <div class="file-upload">
+                <input type="file" id="file-input" name="image" accept="image/*" required>
+                <label for="file-input" class="btn-upload">
+                    Choose Image
+                </label>
             </div>
-            <button type="submit" class="btn btn-upload mt-3">Predict</button>
+            <div class="file-name" id="file-name"></div>
+            <img id="image-preview" src="#" alt="Image Preview" />
+            <button type="submit" class="btn-upload mt-3">
+                Predict
+            </button>
         </form>
 
-        <!-- Conditional display of prediction result -->
-        {% if prediction %}
-        <div class="prediction">
-            Prediction: <span>{{ prediction }}</span>
+        <div class="loading">
+            <div class="spinner"></div>
         </div>
-        {% endif %}
+
+        <div class="prediction" id="prediction">
+            Prediction: <span id="prediction-result"></span>
+        </div>
     </div>
 
     <div class="footer">
@@ -126,17 +246,53 @@
         <span>Atharva Balajiwale, Paras Jain, Omkar Boralkar, Shubh Radia</span>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        // Update file input label with selected file name
-        $('.custom-file-input').on('change', function (event) {
-            var inputFile = event.currentTarget;
-            $(inputFile).parent().find('.custom-file-label').html(inputFile.files[0].name);
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('upload-form');
+            const fileInput = document.getElementById('file-input');
+            const fileName = document.getElementById('file-name');
+            const imagePreview = document.getElementById('image-preview');
+            const loading = document.querySelector('.loading');
+            const prediction = document.getElementById('prediction');
+            const predictionResult = document.getElementById('prediction-result');
+
+            fileInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    fileName.textContent = file.name;
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        imagePreview.style.display = 'block';
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                loading.style.display = 'block';
+                prediction.classList.remove('show');
+
+                // Simulating file upload and prediction (replace with actual AJAX call)
+                setTimeout(function() {
+                    loading.style.display = 'none';
+                    predictionResult.textContent = 'Melanoma';
+                    prediction.classList.add('show');
+                }, 2000);
+            });
+
+            // Add hover effect to the container
+            const container = document.querySelector('.container');
+            container.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+            });
+            container.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
         });
     </script>
 </body>
-
 </html>
