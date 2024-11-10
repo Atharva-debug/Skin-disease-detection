@@ -1,2 +1,3 @@
 .hf
 .keras
+mymodel/feature_extractor_model.keras
